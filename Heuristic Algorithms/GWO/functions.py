@@ -3,8 +3,6 @@ from numpy import sin, cos, tan ,cosh, tanh, sinh, abs, exp, mean, pi, prod, sqr
 
 function = "sum(x**2)"
 
-
-
 def createFunction(f):
     function = f
 
