@@ -4,6 +4,8 @@ from GA import GA
 import numpy as np
 import pandas as pd
 
+deger=(4*4*5*3*2*5)/100
+
 def run_ga_combinations():
     pop_sizes = [100,250,500,1000]
     num_of_generations_values = [100,250,500,1000]
@@ -26,37 +28,23 @@ def run_ga_combinations():
     results = []
 
     for func_enum, (lb, ub) in objective_functions.items():
+        sayac=0
         for pop_size in pop_sizes:
             for num_of_generations in num_of_generations_values:
                 for mut_prob in mut_probabilities:
                     for crossover_type in crossover_types:
                         for selection_type in selection_types:
                             best_fitness_values = []
-                            for i in range(5):  
+                            for _ in range(5):  
                                 obj_func = functions.selectFunction(func_enum)
 
-                                ga_instance = GA(obj_func, lb, ub, 30, pop_size, num_of_generations)
-
-                                ga_instance.cp = 1  
-                                ga_instance.mp = mut_prob  
-                                ga_instance.keep = 2  
-
-                                if crossover_type == '1-point':
-                                    ga_instance.crossover_type = 'one_point'
-                                elif crossover_type == '2-point':
-                                    ga_instance.crossover_type = 'two_point'
-                                elif crossover_type == 'uniform':
-                                    ga_instance.crossover_type = 'uniform'
-
-                                if selection_type == 'roulette_wheel':
-                                    ga_instance.selection_type = 'roulette_wheel'
-                                elif selection_type == 'tournament_selection':
-                                    ga_instance.selection_type = 'tournament_selection'
+                                ga_instance = GA(obj_func, lb, ub, 30, pop_size, num_of_generations, mut_prob, crossover_type, selection_type)
 
                                 result = ga_instance
-                                
-                                best_fitness_values.append(result.best)
 
+                                best_fitness_values.append(result.best)
+                                sayac=sayac+1
+                                print(func_enum.name,((sayac/deger)))
                             avg_fitness = np.mean(best_fitness_values)
                             std_dev_fitness = np.std(best_fitness_values)
                             best_fitness = min(best_fitness_values)
@@ -66,9 +54,9 @@ def run_ga_combinations():
                                 'Function': func_enum.name,
                                 'Pop_Size': pop_size,
                                 'Num_of_Generations': num_of_generations,
-                                'mut_probablity': mut_prob,
-                                'crossover_type': crossover_type,
-                                'selection_type': selection_type,
+                                'Mut_Probability': mut_prob,
+                                'Crossover_Type': crossover_type,
+                                'Selection_Type': selection_type,
                                 'Best_Fitness_1': best_fitness_values[0],
                                 'Best_Fitness_2': best_fitness_values[1],
                                 'Best_Fitness_3': best_fitness_values[2],
