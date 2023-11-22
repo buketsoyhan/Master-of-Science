@@ -76,7 +76,9 @@ def GWO(objf, lb, ub, dim, SearchAgents_no, Max_iter, a_values):
                     Delta_score = fitness  # Update delta
                     Delta_pos = Positions[i, :].copy()
 
-            a = 2 - l * ((2) / Max_iter)
+            a = a_values[0] - l * ((a_values[0]) / Max_iter)
+
+            #2=a_values
             # a decreases linearly from 2 to 0
 
             # Update the Position of search agents including omegas
@@ -130,7 +132,6 @@ def GWO(objf, lb, ub, dim, SearchAgents_no, Max_iter, a_values):
                 print(
                     ["At iteration " + str(l) + " the best fitness is " + str(Alpha_score)]
                 )
-                print("Alpha position "+ str(Alpha_pos))
 
         timerEnd = time.time()
         s.endTime = time.strftime("%Y-%m-%d-%H-%M-%S")
